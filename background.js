@@ -11,7 +11,6 @@
         chrome.tabs.executeScript({
             code: "window.getSelection().toString();"
         }, function (selection) {
-            console.log('selection is', selection);
             switch(command) {
                 case SEARCH_COMMAND:
                     search(selection);
