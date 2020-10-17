@@ -24,8 +24,7 @@
     }
   },
   "permissions": [
-    "activeTab",
-    "browsingData"
+    "activeTab"
   ],
   "manifest_version": 2
 }
