@@ -1,43 +1,54 @@
 (() => {
     'use strict';
 
-    const HARD_RELOAD_COMMAND = 'hard-reload';
-
-    /**
-     * Triggered on browserAction button click
-     */
-    chrome.browserAction.onClicked.addListener(reloadTab);
+    const SEARCH_COMMAND = 'search-text';
+    const DEFINE_COMMAND = 'define-text';
 
     /**
      * Triggered on configured command activation
      */
     chrome.commands.onCommand.addListener((command) => {
-        if (command !== HARD_RELOAD_COMMAND)
-            return;
-
-        chrome.tabs.query({
-            highlighted: true,
-            currentWindow: true
-        }, reloadTabs);
+        chrome.tabs.executeScript({
+            code: "window.getSelection().toString();"
+        }, function (selection) {
+            console.log('selection is', selection);
+            switch(command) {
+                case SEARCH_COMMAND:
+                    search(selection);
+                    break;
+                case DEFINE_COMMAND:
+                    define(selection);
+                    break;
+                default:
+                    return;
+            }
+        });
     });
 
     /**
-     * Reloads a tab by its id, bypassing the cache.
+     * Searches for text.
      *
-     * @param {Object} tab the tab to reload
+     * @param {string} text to search for
      */
-    function reloadTab(tab) {
-        chrome.tabs.reload(tab.id, {
-            bypassCache: true
-        });
+    function search(text) {
+        queryInNewTab(text);
     }
 
     /**
-     * Reloads tabs
+     * Defines text.
      *
-     * @param {Object[]} tabs tabs to reload
+     * @param {string} text to search for
      */
-    function reloadTabs(tabs) {
-        tabs.forEach(reloadTab);
+    function define(text) {
+        queryInNewTab(`define ${text}`);
+    }
+
+    /**
+     * Opens a tab with term as search query.
+     *
+     * @param {string} term to open tab with
+     */
+    function queryInNewTab(term) {
+        chrome.tabs.create({ url: `https://www.google.com/search?q=${term}` });
     }
 })();

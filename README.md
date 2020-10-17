@@ -1,8 +1,10 @@
-# Hard reload
-Chrome extension that hard reloads a page, ignoring the cache.
+# Highlight to search
 
-To hard reload the active tab's content, either click the button in the taskbar or press Alt+R.
+Chrome extension that enables you to lookup search results for text.
+
+To search for text, first highlight it then press Ctrl+Alt+S to search for it or Ctrl+Alt+D to
+ search for its definition.
 
 # Usage
 
-Install from the [Chrome Web Store](https://chrome.google.com/webstore/detail/hard-reload/bdmblpnglgiabhlbpkefgehelmlgodjd).
+Install from the [Chrome Web Store]().
